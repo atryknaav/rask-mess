@@ -1,7 +1,8 @@
-<center>
-***<h1 style="text-align: center; color: #E7E8D1">Welcome to Rask!</h1>***
-![Rask logo](/assets/images/logo.md.png "Logo")
-</center>
+
+<h1 style="text-align: center; color: #E7E8D1">Welcome to Rask!</h1>
+
+![rask logo](/assets/images/logo.md.png "Logo")
+
 #### Rask is a Messenger-like real-time chatting web application.
 You can easily create a new account and use it.
 
