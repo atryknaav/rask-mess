@@ -28,7 +28,7 @@ export default function Input({
             </label>
 
             <div className="mt-2">
-                <input id={id} type={type} autoComplete={id} disabled={disabled} required={required} className='p-3 min-w-[80%] rounded-lg bg-slate-50 disabled:bg-[#d6d6d6] disabled:text-[#a1a1a1]' placeholder={placeholder}/>
+                <input id={id} type={type} autoComplete={id} disabled={disabled} required={required} className='p-3 min-w-[80%]  max-w-[80%] rounded-lg bg-slate-50 disabled:bg-[#d6d6d6] disabled:text-[#a1a1a1]' placeholder={placeholder}/>
             </div>
         </div>
     )
