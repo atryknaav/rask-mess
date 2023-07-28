@@ -79,7 +79,7 @@ export default function AuthForm() {
                   Register a new account
               </h2>
         <div className="text-center mt-8 max-w-2xl sm:mx-auto sm:w-full sm:max-w-md">
-          <div className="bg-[#E7E8D1] px-4 py-8 shadow sm:rounded-lg sm:px-10 sm:mx-15">
+          <div className="bg-[#E7E8D1] px-4 py-8 shadow rounded-lg sm:px-10">
             <form className="space-y-6" onSubmit={(e) => handleSubmit(e)}>
               
               <Input id='username' label='Username' disabled={isLoading} type='text' placeholder='Enter your username'/>
