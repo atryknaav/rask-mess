@@ -4,6 +4,10 @@ import React, { FormEvent, useCallback, useState } from 'react';
 import Input from './Input';
 import Button from './Button';
 import { FaGoogle, FaGithub } from 'react-icons/fa';
+import axios from 'axios';
+import { signIn } from "next-auth/react";
+import { redirect } from 'next/navigation';
+
 
 export default function AuthForm() {
   enum aOptions {
@@ -13,6 +17,10 @@ export default function AuthForm() {
 
   const [aOption, setAOption] = useState<aOptions>(aOptions.LOGIN);
   const[isLoading, setIsLoading] = useState<boolean>(false);
+
+  const [username, setUsername] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [rePwd, setRePwd] = useState<string>('');
 
   const toggleAOption = useCallback(() => {
     if (aOption === aOptions.LOGIN) {
@@ -24,17 +32,38 @@ export default function AuthForm() {
 
   type authType = {
     username: string,
-    password: string
+    password: string,
+    rePwd?: string
   };
 
-  const handleSubmit = (data: FormEvent<HTMLFormElement>) => {
-    data.preventDefault();
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     setIsLoading(true);
 
+    
+    const regData = password === rePwd && aOption === aOptions.REGISTER
+      ? {
+        username, 
+        password
+      }
+      
+      : { };
+    if (!regData.password && aOption === aOptions.REGISTER) throw new Error("The passwords don't match");
+
+
+    const signInData = {
+      username, 
+      password
+    }
+
     if(aOption === aOptions.REGISTER) {
-
+      axios.post('/api/register', regData);
     } else {
-
+      signIn('credentials', {...signInData, redirect: false})
+      .then(
+        () => {redirect("/");}
+      )
+      
     }
   };
 
@@ -56,9 +85,10 @@ export default function AuthForm() {
             ?
             <form className="space-y-6" onSubmit={(e) => handleSubmit(e)}>
               
-              <Input id='username' label='Username' disabled={isLoading} type='text' placeholder='Enter your username'/>
-              <Input id='password' label='Password' disabled={isLoading} type='password' placeholder='Enter your password'/>
+              <Input id='username' label='Username' disabled={isLoading} type='text' placeholder='Enter your username' state={username} setState={setUsername}/>
+              <Input id='password' label='Password' disabled={isLoading} type='password' placeholder='Enter your password' state={password} setState={setPassword}/>
               <Button disabled={isLoading} action='Sign In' />
+              
             </form>
 
 
@@ -67,9 +97,9 @@ export default function AuthForm() {
 
             <form className="space-y-6" onSubmit={(e) => handleSubmit(e)}>
               
-              <Input id='username' label='Username' disabled={isLoading} type='text' placeholder='Enter your username'/>
-              <Input id='password' label='Password' disabled={isLoading} type='password' placeholder='Enter your password'/>
-              <Input id='repassword' label='Confirm the password' disabled={false} type='password' placeholder='Confirm your password'/>
+              <Input id='username' label='Username' disabled={isLoading} type='text' placeholder='Enter your username' state={username} setState={setUsername}/>
+              <Input id='password' label='Password' disabled={isLoading} type='password' placeholder='Enter your password' state={password} setState={setPassword}/>
+              <Input id='repassword' label='Confirm the password' disabled={false} type='password' placeholder='Confirm your password' state={rePwd} setState={setRePwd}/>
               <Button disabled={isLoading}  action='Register' />
             </form>
 
