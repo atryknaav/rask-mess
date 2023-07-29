@@ -5,7 +5,6 @@ import Input from './Input';
 import Button from './Button';
 import { FaGoogle, FaGithub } from 'react-icons/fa';
 import axios from 'axios';
-import { signIn } from "next-auth/react";
 import { redirect } from 'next/navigation';
 
 
@@ -59,10 +58,7 @@ export default function AuthForm() {
     if(aOption === aOptions.REGISTER) {
       axios.post('/api/register', regData);
     } else {
-      signIn('credentials', {...signInData, redirect: false})
-      .then(
-        () => {redirect("/");}
-      )
+      axios.post('/api/signin', signInData);
       
     }
   };
