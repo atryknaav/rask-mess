@@ -4,6 +4,7 @@ import React, { FormEvent, useCallback, useState } from 'react';
 import Input from './Input';
 import Button from './Button';
 import { FaGoogle, FaGithub } from 'react-icons/fa';
+import axios from 'axios'
 
 export default function AuthForm() {
   enum aOptions {
@@ -28,15 +29,35 @@ export default function AuthForm() {
 
   type authType = {
     username: string,
-    password: string
+    password: string,
   };
 
-  const handleSubmit = (data: FormEvent<HTMLFormElement>) => {
-    data.preventDefault();
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     setIsLoading(true);
+    const data = {
+      username: username,
+      password: password
+    };
 
     if(aOption === aOptions.REGISTER) {
+      if(password === rePassword){
+          axios.post('/api/register', data)
+          .then(function () {
+            setIsLoading(false);
+            setUsername('');
+            setPassword('');
+            setRePassword('');
+          })
+          .catch(function (error) {
+            console.log(error);
 
+          });
+          
+
+      } else {
+        throw new Error("The passwords don't match")
+      }
     } else {
 
     }
@@ -62,9 +83,9 @@ export default function AuthForm() {
 
               {aOption !== aOptions.LOGIN 
               ?
-                <Input id='password' label='Password' disabled={isLoading} type='password' placeholder='Confirm the password' state={rePassword} setState={setRePassword}/>
+                <Input id='repassword' label='Confirm your password' disabled={isLoading} type='password' placeholder='Reenter the password' state={rePassword} setState={setRePassword}/>
               : 
-                null}
+                null} 
 
               <Button disabled={isLoading} action={aOption === aOptions.LOGIN ? 'Sign In' : 'Sign Up'}/>
 
