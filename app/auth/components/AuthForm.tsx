@@ -5,12 +5,15 @@ import Input from './Input';
 import Button from './Button';
 import { FaGoogle, FaGithub } from 'react-icons/fa';
 import axios from 'axios'
+import { useRouter } from 'next/navigation';
 
 export default function AuthForm() {
   enum aOptions {
     'LOGIN',
     'REGISTER'
   };
+
+  const router = useRouter();
 
   const [aOption, setAOption] = useState<aOptions>(aOptions.LOGIN);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -59,7 +62,12 @@ export default function AuthForm() {
         throw new Error("The passwords don't match")
       }
     } else {
-
+        setIsLoading(false);
+        console.log('ere')
+            setUsername('');
+            setPassword('');
+            setRePassword('');
+            router.push('/');
     }
   };
 
@@ -73,7 +81,7 @@ export default function AuthForm() {
         {aOption === aOptions.LOGIN ? "Sign in to your account" : "Register a new account"}
         </h2>
         <div className="text-center mt-8 max-w-2xl sm:mx-auto sm:w-full sm:max-w-md">
-          <div className="bg-[#E7E8D1] px-4 py-8 shadow sm:rounded-lg sm:px-10">
+          <div className="bg-[#E7E8D1] px-4 py-8 shadow-md sm:rounded-lg sm:px-10">
             
             <form className="space-y-6" onSubmit={(e) => handleSubmit(e)}>
               

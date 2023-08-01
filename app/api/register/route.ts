@@ -7,8 +7,8 @@ type authType = {
     password: string,
   };
 
-export async function POST(request: Request) {
-    const data: authType  = await request.json();
+export async function POST(req: Request) {
+    const data: authType  = await req.json();
     const { username, password } = data;
 
     const hashedPassword = await bcrypt.hash(password, 13);

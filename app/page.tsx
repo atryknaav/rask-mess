@@ -1,10 +1,16 @@
-import { redirect } from 'next/navigation';
+'use client';
+
+import { useState } from 'react';
+import Sidebar from './components/Sidebar';
+import CurrentChat from './components/CurrentChat';
 
 export default function Home() {
-  redirect('/auth')
+ const [currChat, setCurrChat] = useState<string | null>(null);
   return (
-    <main>
-      Hi
-    </main>
+    <div className='flex flex-row h-full w-full'>
+
+      <Sidebar currChat={currChat} setCurrChat={setCurrChat} />
+      <CurrentChat currChat={currChat} setCurrChat={setCurrChat}/>
+    </div>
   )
 }
