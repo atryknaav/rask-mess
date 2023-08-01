@@ -14,7 +14,7 @@ export default function CurrentChat({ currChat, setCurrChat }: propsType) {
   const chat = chats.filter(chat => chat.user.name === currChat)[0];
   return (
     <div>
-      <div className='bg-[#E7E8D1] flex sticky min-h-full min-w-[65vw] align-bottom'>
+      <div className='bg-[#E7E8D1] flex min-h-full min-w-[65vw] align-bottom'>
 
 
         {currChat === null
@@ -31,14 +31,28 @@ export default function CurrentChat({ currChat, setCurrChat }: propsType) {
             <UserBar />
           </div>
 
-          <div className='flex flex-col justify-end w-full overflow-y-visible'>
-            <Message message={chat.messages[0]} />
-            <Message message={chat.messages[1]} />
-            <Message message={chat.messages[2]} />
-            <Message message={chat.messages[0]} />
-            
+          <div className="h-[90%] overflow-y-scroll">
+            <div className='flex flex-col justify-end h-[100%] w-full'>
+              <Message message={chat.messages[0]} />
+              <Message message={chat.messages[1]} />
+              <Message message={chat.messages[2]} />
+              <Message message={chat.messages[0]} />
+              <Message message={chat.messages[1]} />
+              <Message message={chat.messages[2]} />
+              <Message message={chat.messages[0]} />
+              <Message message={chat.messages[1]} />
+              <Message message={chat.messages[2]} />
+              <Message message={chat.messages[0]} />
+              <Message message={chat.messages[1]} />
+              <Message message={chat.messages[2]} />
+              <Message message={chat.messages[0]} />
+              
 
+            </div>
           </div>
+
+          <SendMessage />
+
         </div>
         }
           
