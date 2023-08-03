@@ -9,7 +9,7 @@ type propsType = {
 
 export default function Sidebar({ currChat, setCurrChat }: propsType) {
   return (
-    <div className='flex flex-col overflow-y-auto overflow-x-hidden h-[100vh]'>
+    <div className='flex flex-col overflow-y-auto overflow-x-hidden h-[100vh] border-r-2 border-[#4d4d4d03] bg-[#b0c7b7] shadow-r-1'>
       <div className='left-0 bg-[#b0c7b7] h-[100hv] min-w-[35vw] sticky shadow-xl z-10'>
         <SearchBar />
         <ChatBar currChat={currChat} setCurrChat={setCurrChat} />

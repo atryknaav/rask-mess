@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { chats } from '@/db/db';
 import Message from './Message';
 import UserBar from './UserBar';
@@ -11,10 +11,36 @@ type propsType = {
 
 
 export default function CurrentChat({ currChat, setCurrChat }: propsType) {
-  const chat = chats.filter(chat => chat.user.name === currChat)[0];
+  const [messages, setMessages] = useState<Message[]>();
+  const msgListRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+
+    if(currChat){
+      
+
+  const chat = chats.find(chat => chat.user.name === currChat);
+
+  setMessages(chat?.messages)
+    }
+
+  
+  }, [currChat])
+
+  useEffect(() => {
+  if(currChat && msgListRef.current){
+    msgListRef.current.scrollTop = msgListRef.current.scrollHeight;
+    console.log(msgListRef.current?.scrollTop)
+  }
+  }, [messages])
+
+
+
+
+  console.log(messages)
+
   return (
     <div>
-      <div className='bg-[#E7E8D1] flex min-h-full min-w-[65vw] align-bottom'>
+      <div className='bg-[#E7E8D1] flex min-h-full min-w-[65vw] align-bottom shadow-inner'>
 
 
         {currChat === null
@@ -31,27 +57,20 @@ export default function CurrentChat({ currChat, setCurrChat }: propsType) {
             <UserBar />
           </div>
 
-          <div className="h-[90%] overflow-y-scroll">
-            <div className='flex flex-col justify-end h-[100%] w-full'>
-              <Message message={chat.messages[0]} />
-              <Message message={chat.messages[1]} />
-              <Message message={chat.messages[2]} />
-              <Message message={chat.messages[0]} />
-              <Message message={chat.messages[1]} />
-              <Message message={chat.messages[2]} />
-              <Message message={chat.messages[0]} />
-              <Message message={chat.messages[1]} />
-              <Message message={chat.messages[2]} />
-              <Message message={chat.messages[0]} />
-              <Message message={chat.messages[1]} />
-              <Message message={chat.messages[2]} />
-              <Message message={chat.messages[0]} />
+            <div className='flex flex-col max-h-[80%] w-full overflow-y-auto' ref={msgListRef}>
+             { currChat && messages?.map((message, index) => {
+                return(
+                  <Message key={index} message={message} />
+                  
+                )
+              })}
               
 
             </div>
-          </div>
 
-          <SendMessage />
+              {currChat &&
+                <SendMessage setMessages={setMessages} messages={messages}/>
+              }
 
         </div>
         }

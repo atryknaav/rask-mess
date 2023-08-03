@@ -40,32 +40,6 @@ export default function ChatsBar({ currChat, setCurrChat }: propsType) {
         currChat={currChat}
         setCurrChat={setCurrChat}
       />
-      <Chat 
-        chat={chats[5]}
-        currChat={currChat}
-        setCurrChat={setCurrChat}
-      />
-      <Chat 
-        chat={chats[5]}
-        currChat={currChat}
-        setCurrChat={setCurrChat}
-      />
-      <Chat 
-        chat={chats[5]}
-        currChat={currChat}
-        setCurrChat={setCurrChat}
-      />
-      <Chat 
-        chat={chats[5]}
-        currChat={currChat}
-        setCurrChat={setCurrChat}
-      />
-      <Chat 
-        chat={chats[5]}
-        currChat={currChat}
-        setCurrChat={setCurrChat}
-      />
-      
     </div>
   )
 }

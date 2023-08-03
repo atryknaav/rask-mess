@@ -7,6 +7,7 @@ type Message = {
     sender: User;
     content: string;
     date: string;
+    read: boolean
 }
 
 

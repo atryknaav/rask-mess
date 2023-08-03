@@ -1,11 +1,6 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
-type propsType = {
-    user: User,
-    messages: Message[],
-    currChat: string | null;
-    setCurrChat: Dispatch<SetStateAction<string | null>>;
-}
+
 
 export default function Chat(
     // { user, messages, currChat, setCurrChat }: propsType) {
@@ -14,8 +9,9 @@ export default function Chat(
     const { chat, currChat, setCurrChat} = props;
     const { user, messages } = chat;
 
-    const lastMessage = messages[0].content.substring(0, 55) + '...';
-    const lastTime = messages[0].date.split(' ')[1];
+    const lastMessage = messages[0].content.substring(0, 56) + '...';
+    const timeArray = messages[0].date.split(' ')[4].split(':');
+    const lastTime = `${timeArray[0]}:${timeArray[1]}`
     const [curr, setCurr] = useState<boolean>(false);
 
     useEffect(() => {
@@ -24,29 +20,30 @@ export default function Chat(
     }, [currChat]);
 
     const handleOnClick = () => {
+        console.log(`Username:${user.name}`)
         setCurrChat(user.name);
     }
 
     const style: string = curr 
-    ? 'flex justify-between w-[94%] max-h-[12vh] min-h-[10vh] rounded-2xl p-1 items-center bg-[#cae6d3] shadow-md ml-[2%] mb-1' 
+    ? 'bg-[#cae6d3] shadow-md' 
 
-    : 'flex justify-between w-[94%] bg-[#c0d6c7] max-h-[12vh] min-h-[10vh] rounded-2xl p-1 items-center hover:bg-[#c5dacb] active:bg-bg-[#c6dfce]shadow-sm ml-[2%] mb-1';
+    : 'bg-[#c0d6c7] hover:bg-[#c5dacb] active:bg-bg-[#c6dfce] shadow-sm';
 
   return (
     
-    <div className='min-w-full flex justify-start bg-[#b0c7b7] my-2 bg-origi select-none'>
+    <div className='min-w-full flex justify-start bg-[#b0c7b7] select-none border-b-2 border-[#aaaaaa03]'>
 
-        <div className={style} onClick={handleOnClick}>
+        <div className={'flex justify-between w-full max-h-[12vh] min-h-[10vh] p-1 items-center ' + style} onClick={handleOnClick}>
         
-            <div className="rounded-full bg-white w-[60px] h-[60px]"></div>
-            <div className='flex flex-col flex-[0.98]'>
+            <div className="rounded-full bg-white w-[8vh] h-[8vh] ml-1"></div>
+            <div className='flex flex-col flex-[0.98] text-[1.5vh]'>
 
                 <div className='flex flex-row justify-between'>
 
                     <div className='p-1 flex h-[85%] justify-start text-left'>
                         {user.name}
                     </div>
-                    <div className='p-1 flex h-[85%] justify-start text-left pr-2'>
+                    <div className='p-1 flex h-[85%] justify-start text-left pr-8'>
                         {lastTime}
                     </div>
 
